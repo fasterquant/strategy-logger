@@ -1,0 +1,5 @@
+﻿{
+	"Path": "c:\\Temp\\",
+	"LiveTradingLogFile": "AlgoTerminalLive.log",
+	"BacktestLogFile": "AlgoTerminalBacktest.log"
+}
