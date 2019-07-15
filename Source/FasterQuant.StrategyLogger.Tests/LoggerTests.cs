@@ -12,8 +12,9 @@ namespace FasterQuant.StrategyLogger.Tests
         {
             var lf = new LoggerFactory("LIVE");
             Log.Logger = lf.GetLogger();
+            var sed = new StrategyEventData(8898, "This is a test", 339393, "kdkdkd", "Long", "test here", "Execution", "fun");
 
-            Log.Information("This is a test");
+            Log.Information("{@Strategy}", sed);
         }
     }
 }
