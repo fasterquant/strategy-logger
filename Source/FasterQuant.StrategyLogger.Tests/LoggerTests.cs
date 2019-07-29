@@ -10,7 +10,7 @@ namespace FasterQuant.StrategyLogger.Tests
         [TestMethod]
         public void TestMethod1()
         {
-            var lf = new LoggerFactory("LIVE");
+            var lf = new LoggerFactory(StrategyMode.Live);
             Log.Logger = lf.GetLogger();
             var sed = new StrategyEventData(8898, "This is a test", 339393, "kdkdkd", "Long", "test here", "Execution", "fun");
 

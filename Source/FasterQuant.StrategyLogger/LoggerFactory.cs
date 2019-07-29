@@ -12,17 +12,17 @@ namespace FasterQuant.StrategyLogger
         private LogConfiguration _logConfig;
         private string _logPath;
 
-        public LoggerFactory(string strategyMode)
+        public LoggerFactory(StrategyMode strategyMode)
         {
-            var configPath = Path.Combine(getConfigPath(), _logConfigFile);
-            this._logConfig = JsonConvert.DeserializeObject<LogConfiguration>(readConfig(configPath));
-            this._logPath = getLogPath(strategyMode, this._logConfig);
+            var configPath = Path.Combine(GetConfigPath(), _logConfigFile);
+            this._logConfig = JsonConvert.DeserializeObject<LogConfiguration>(ReadConfig(configPath));
+            this._logPath = GetLogPath(strategyMode, this._logConfig);
         }
 
-        public LoggerFactory(string strategyMode, LogConfiguration logConfig)
+        public LoggerFactory(StrategyMode strategyMode, LogConfiguration logConfig)
         {
             this._logConfig = logConfig;
-            this._logPath = getLogPath(strategyMode, logConfig); 
+            this._logPath = GetLogPath(strategyMode, logConfig); 
         }
 
         public ILogger GetLogger()
@@ -33,19 +33,19 @@ namespace FasterQuant.StrategyLogger
                     .CreateLogger();
         }
         
-        private string getLogPath(string strategyMode, LogConfiguration logConfig)
+        private string GetLogPath(StrategyMode strategyMode, LogConfiguration logConfig)
         {
-            var logFile = strategyMode.ToUpper() == "LIVE" ? this._logConfig.LiveTradingLogFile : this._logConfig.BacktestLogFile;
+            var logFile = strategyMode == StrategyMode.Live ? this._logConfig.LiveTradingLogFile : this._logConfig.BacktestLogFile;
             return Path.Combine(this._logConfig.Path, logFile);
         }
 
-        private string getConfigPath()
+        private string GetConfigPath()
         {
             var ass = Assembly.GetExecutingAssembly();
             return new Uri(ass.CodeBase).LocalPath.ToLower().Replace((Assembly.GetExecutingAssembly().GetName().Name).ToLower() + ".dll", "");
         }
 
-        private string readConfig(string path)
+        private string ReadConfig(string path)
         {
             var config = "";
             var s = "";
