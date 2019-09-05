@@ -3,6 +3,10 @@ FasterQuant.StrategyLogger utilizes Serilog and provides the ability to easily w
 
 Please see the [unit tests](/Source/FasterQuant.StrategyLogger.Tests/StrategyLoggerTests.cs) for usage.
 
+## License
+
+Released under the [MIT license](https://opensource.org/licenses/MIT).
+
 
 
 
