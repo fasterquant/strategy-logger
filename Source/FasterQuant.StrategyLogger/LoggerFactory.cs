@@ -8,28 +8,30 @@ namespace FasterQuant.StrategyLogger
 {
     public class LoggerFactory
     {
-        private string _logConfigFile = "LoggerConfig.json";
-        private LogConfiguration _logConfig;
-        private string _logPath;
+        private readonly LogConfiguration _logConfig;
+        private readonly string _logPath;
+        private readonly RollingInterval _rollingInterval;
 
-        public LoggerFactory(StrategyMode strategyMode)
+        public LoggerFactory(StrategyMode strategyMode, string logConfigFileName, RollingInterval rollingInterval)
         {
-            var configPath = Path.Combine(GetConfigPath(), _logConfigFile);
-            this._logConfig = JsonConvert.DeserializeObject<LogConfiguration>(ReadConfig(configPath));
+            var config = ReadConfig(GetConfigPath(), logConfigFileName);
+            this._logConfig = JsonConvert.DeserializeObject<LogConfiguration>(config);
             this._logPath = GetLogPath(strategyMode, this._logConfig);
+            this._rollingInterval = rollingInterval;
         }
 
-        public LoggerFactory(StrategyMode strategyMode, LogConfiguration logConfig)
+        public LoggerFactory(StrategyMode strategyMode, LogConfiguration logConfig, RollingInterval rollingInterval)
         {
             this._logConfig = logConfig;
-            this._logPath = GetLogPath(strategyMode, logConfig); 
+            this._logPath = GetLogPath(strategyMode, logConfig);
+            this._rollingInterval = rollingInterval;
         }
 
         public ILogger GetLogger()
         {
             return new LoggerConfiguration()
                     .MinimumLevel.Debug()
-                    .WriteTo.File(this._logPath, rollingInterval: RollingInterval.Month)
+                    .WriteTo.File(this._logPath, rollingInterval: this._rollingInterval)
                     .CreateLogger();
         }
         
@@ -45,16 +47,17 @@ namespace FasterQuant.StrategyLogger
             return new Uri(ass.CodeBase).LocalPath.ToLower().Replace((Assembly.GetExecutingAssembly().GetName().Name).ToLower() + ".dll", "");
         }
 
-        private string ReadConfig(string path)
+        private string ReadConfig(string path, string logConfigFileName)
         {
             var config = "";
             var s = "";
-            if (!File.Exists(path))
+            var fullPath = Path.Combine(path, logConfigFileName);
+            if (!File.Exists(fullPath))
             {
-                throw new Exception("The following path does not exist: " + path + ".  Please make sure " + _logConfigFile + " is deployed with " + Assembly.GetExecutingAssembly().GetName() + ".");
+                throw new Exception("The following path does not exist: " + fullPath + ".  Please make sure " + logConfigFileName + " is deployed with " + Assembly.GetExecutingAssembly().GetName() + ".");
             }
 
-            using (StreamReader sr = File.OpenText(path))
+            using (StreamReader sr = File.OpenText(fullPath))
             {
                 while ((s = sr.ReadLine()) != null)
                 {

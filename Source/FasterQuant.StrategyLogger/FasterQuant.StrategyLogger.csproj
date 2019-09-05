@@ -54,17 +54,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Events\EventSubType.cs" />
-    <Compile Include="Events\EventType.cs" />
-    <Compile Include="Events\LimitOrderEventData.cs" />
+    <Compile Include="EventDatas\EventSubType.cs" />
+    <Compile Include="EventDatas\EventType.cs" />
+    <Compile Include="EventDatas\LimitOrderEventData.cs" />
     <Compile Include="LogConfiguration.cs" />
     <Compile Include="LoggerFactory.cs" />
-    <Compile Include="Events\OrderEventData.cs" />
+    <Compile Include="EventDatas\OrderEventData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Events\StopOrderEventData.cs" />
-    <Compile Include="Events\StrategyEventData.cs" />
-    <Compile Include="Events\SignalEventData.cs" />
-    <Compile Include="Events\TradeEventData.cs" />
+    <Compile Include="EventDatas\StopOrderEventData.cs" />
+    <Compile Include="EventDatas\StrategyEventData.cs" />
+    <Compile Include="EventDatas\SignalEventData.cs" />
+    <Compile Include="EventDatas\TradeEventData.cs" />
     <Compile Include="StrategyMode.cs" />
   </ItemGroup>
   <ItemGroup>
